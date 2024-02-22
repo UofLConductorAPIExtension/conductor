@@ -141,6 +141,14 @@ public interface WorkflowService {
             boolean archiveWorkflow);
 
     /**
+     * Removes a list of workflows from the system.
+     *
+     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     */
+    public void bulkDeleteWorkflows(List<String> workflowIds, boolean archiveWorkflow);
+
+    /**
      * Retrieves all the running workflows.
      *
      * @param workflowName Name of the workflow.

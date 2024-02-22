@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -194,6 +195,25 @@ public class WorkflowServiceImpl implements WorkflowService {
      */
     public void deleteWorkflow(String workflowId, boolean archiveWorkflow) {
         executionService.removeWorkflow(workflowId, archiveWorkflow);
+    }
+
+    /**
+     * Removes a list of workflows from the system.
+     *
+     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     */
+    public void bulkDeleteWorkflows(List<String> workflowIds, boolean archiveWorkflow) {
+        List<String> missingWorkflows = new ArrayList<>(); // TODO: do something with this
+        for (String workflowId : workflowIds) {
+            Workflow workflow = executionService.getExecutionStatus(workflowId, false);
+            if (workflow == null) {
+                missingWorkflows.add(workflowId);
+            }
+            else {
+                deleteWorkflow(workflowId, archiveWorkflow); // TODO: change this to method that cancels then deletes workflows
+            }
+        }
     }
 
     /**
