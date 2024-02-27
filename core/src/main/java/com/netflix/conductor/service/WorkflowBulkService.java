@@ -75,6 +75,6 @@ public interface WorkflowBulkService {
                             message =
                                     "Cannot process more than {max} workflows. Please use multiple requests.")
                     List<String> workflowIds
-                boolean archiveWorkflow);
+            boolean archiveWorkflow);
     )
 }
