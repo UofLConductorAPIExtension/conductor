@@ -90,7 +90,7 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
     /**
      * Restart the list of workflows.
      *
-     * @param workflowIds          - list of workflow Ids to perform restart operation on
+     * @param workflowIds - list of workflow Ids to perform restart operation on
      * @param useLatestDefinitions if true, use latest workflow and task definitions upon restart
      * @return bulk response object containing a list of succeeded workflows and a list of failed
      *     ones with errors
