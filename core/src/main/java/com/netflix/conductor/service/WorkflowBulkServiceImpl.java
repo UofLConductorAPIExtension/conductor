@@ -142,10 +142,10 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      * Terminate workflows execution.
      *
      * @param workflowIds - list of workflow Ids to perform terminate operation on
-     * @param reason      - description to be specified for the terminated workflow for future
-     *                    references.
+     * @param reason - description to be specified for the terminated workflow for future
+     *     references.
      * @return bulk response object containing a list of succeeded workflows and a list of failed
-     * ones with errors
+     *     ones with errors
      */
     public BulkResponse terminate(List<String> workflowIds, String reason) {
         BulkResponse bulkResponse = new BulkResponse();
