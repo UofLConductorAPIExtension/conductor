@@ -111,4 +111,10 @@ public class WorkflowBulkResource {
             @RequestParam(value = "reason", required = false) String reason) {
         return workflowBulkService.terminate(workflowIds, reason);
     }
+
+    @DeleteMapping("/remove")
+    public BulkResponse delete(
+            @RequestBody List<String> workflowIds) String reason) {
+        return workflowBulkService.delete(workflowIds)
+    }
 }

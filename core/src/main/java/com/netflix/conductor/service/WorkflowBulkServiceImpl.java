@@ -164,14 +164,17 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
         }
         return bulkResponse;
     }
-
-    @DeleteMapping("/workflows/{workflowIds}/remove")
-    public BulkResponse delete(List<String> workflowIds) {
+    /**
+     * Removes a list of workflows from the system.
+     *
+     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     */
+    public BulkResponse deleteWorkflow(List<String> workflowIds, boolean archiveWorkflow) {
         BulkResponse bulkResponse = new BulkResponse();
-        ExecutionService executionService = new ExecutionService();
-        for(String workflowId : workflowIds) {
+        for (String workflowId : workflowIds) {
             try {
-                executionService.remove(workflowId, true);
+                workflowService.deleteWorkflow(workflowId, archiveWorkflow); // TODO: change this to method that cancels then deletes workflows
                 bulkResponse.appendSuccessResponse(workflowId);
             } catch (Exception e) {
                 LOGGER.error(
