@@ -40,7 +40,7 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      *
      * @param workflowIds - list of workflow Ids to perform pause operation on
      * @return bulk response object containing a list of succeeded workflows and a list of failed
-     * ones with errors
+     *     ones with errors
      */
     public BulkResponse pauseWorkflow(List<String> workflowIds) {
 
@@ -67,7 +67,7 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      *
      * @param workflowIds - list of workflow Ids to perform resume operation on
      * @return bulk response object containing a list of succeeded workflows and a list of failed
-     * ones with errors
+     *     ones with errors
      */
     public BulkResponse resumeWorkflow(List<String> workflowIds) {
         BulkResponse bulkResponse = new BulkResponse();
@@ -93,7 +93,7 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      * @param workflowIds          - list of workflow Ids to perform restart operation on
      * @param useLatestDefinitions if true, use latest workflow and task definitions upon restart
      * @return bulk response object containing a list of succeeded workflows and a list of failed
-     * ones with errors
+     *     ones with errors
      */
     public BulkResponse restart(List<String> workflowIds, boolean useLatestDefinitions) {
         BulkResponse bulkResponse = new BulkResponse();
@@ -118,7 +118,7 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      *
      * @param workflowIds - list of workflow Ids to perform retry operation on
      * @return bulk response object containing a list of succeeded workflows and a list of failed
-     * ones with errors
+     *     ones with errors
      */
     public BulkResponse retry(List<String> workflowIds) {
         BulkResponse bulkResponse = new BulkResponse();
