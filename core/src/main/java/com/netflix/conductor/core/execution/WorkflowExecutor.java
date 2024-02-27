@@ -567,7 +567,7 @@ public class WorkflowExecutor {
         }
 
         executionLockService.releaseLock(workflow.getWorkflowId());
-        executionLockService.Lock(workflow.getWorkflowId());
+        executionLockService.deleteLock(workflow.getWorkflowId());
         return workflow;
     }
 
