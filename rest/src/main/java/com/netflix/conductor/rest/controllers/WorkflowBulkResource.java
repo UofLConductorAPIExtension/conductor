@@ -112,6 +112,12 @@ public class WorkflowBulkResource {
         return workflowBulkService.terminate(workflowIds, reason);
     }
 
+    /**
+     * Delete the list of workflows.
+     *
+     * @param workflowIds - list of workflow Ids to be deleted
+     * @return bulk reponse object containing a list of successfully deleted workflows
+     */
     @DeleteMapping("/remove")
     public BulkResponse delete(
             @RequestBody List<String> workflowIds) String reason) {
