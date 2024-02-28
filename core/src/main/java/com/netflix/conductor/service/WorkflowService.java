@@ -21,19 +21,19 @@ import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.common.model.BulkResponse;
 import com.netflix.conductor.common.run.ExternalStorageLocation;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.run.WorkflowSummary;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 @Validated
 public interface WorkflowService {
+
+    int MAX_REQUEST_ITEMS = 1000;
 
     /**
      * Start a new workflow with StartWorkflowRequest, which allows task to be executed in a domain.
@@ -397,4 +397,20 @@ public interface WorkflowService {
      */
     ExternalStorageLocation getExternalStorageLocation(
             String path, String operation, String payloadType);
+
+    /**
+     * Remove a list of workflows
+     *
+     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     * @return instance of {@link BulkResponse}
+     */
+    BulkResponse deleteWorkflows(
+            @NotEmpty(message = "WorkflowIds list cannot be null.")
+                    @Size(
+                            max = MAX_REQUEST_ITEMS,
+                            message =
+                                    "Cannot process more than {max} workflows. Please use multiple requests.")
+                    List<String> workflowIds,
+            boolean archiveWorkflow);
 }
