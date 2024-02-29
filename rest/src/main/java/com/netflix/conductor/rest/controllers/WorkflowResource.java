@@ -207,19 +207,7 @@ public class WorkflowResource {
             @RequestParam(value = "reason", required = false) String reason) {
         workflowService.terminateWorkflow(workflowId, reason);
     }
-
-    @DeleteMapping("/{workflowId}/terminateRemove")
-    @Operation(summary = "Terminate workflow execution and remove the workflow from the system")
-    public void terminateRemove(
-            @PathVariable("workflowId") String workflowId,
-            @RequestParam(value = "reason", required = false) String reason,
-            @RequestParam(value = "archiveWorkflow", defaultValue = "true", required = false)
-            boolean archiveWorkflow) {
-        workflowService.terminateWorkflow(workflowId, reason);
-        workflowService.deleteWorkflow(workflowId, archiveWorkflow);
-    }
-    )
-
+    
     @Operation(
             summary = "Search for workflows based on payload and other parameters",
             description =
