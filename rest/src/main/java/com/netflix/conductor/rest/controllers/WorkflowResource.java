@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
-import com.netflix.conductor.common.model.BulkResponse;
 import com.netflix.conductor.common.run.*;
 import com.netflix.conductor.service.WorkflowService;
 import com.netflix.conductor.service.WorkflowTestService;
@@ -207,7 +206,7 @@ public class WorkflowResource {
             @RequestParam(value = "reason", required = false) String reason) {
         workflowService.terminateWorkflow(workflowId, reason);
     }
-    
+
     @Operation(
             summary = "Search for workflows based on payload and other parameters",
             description =
@@ -283,19 +282,5 @@ public class WorkflowResource {
     @Operation(summary = "Test workflow execution using mock data")
     public Workflow testWorkflow(@RequestBody WorkflowTestRequest request) {
         return workflowTestService.testWorkflow(request);
-    }
-
-    /**
-     * Delete the list of workflows.
-     *
-     * @param workflowIds - list of workflow Ids to be deleted
-     * @return bulk reponse object containing a list of successfully deleted workflows
-     */
-    @DeleteMapping("/remove-by-ids")
-    public BulkResponse deleteWorkflows(
-            @RequestBody List<String> workflowIds,
-            @RequestParam(value = "archiveWorkflow", defaultValue = "true", required = false)
-                    boolean archiveWorkflow) {
-        return workflowService.deleteWorkflows(workflowIds, archiveWorkflow);
     }
 }

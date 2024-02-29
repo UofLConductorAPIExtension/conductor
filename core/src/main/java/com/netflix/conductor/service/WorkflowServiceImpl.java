@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.netflix.conductor.annotations.Audit;
@@ -27,7 +25,6 @@ import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
-import com.netflix.conductor.common.model.BulkResponse;
 import com.netflix.conductor.common.run.ExternalStorageLocation;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
@@ -43,7 +40,6 @@ import com.netflix.conductor.core.utils.Utils;
 @Service
 public class WorkflowServiceImpl implements WorkflowService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WorkflowService.class);
     private final WorkflowExecutor workflowExecutor;
     private final ExecutionService executionService;
     private final MetadataService metadataService;
@@ -461,32 +457,5 @@ public class WorkflowServiceImpl implements WorkflowService {
     public ExternalStorageLocation getExternalStorageLocation(
             String path, String operation, String type) {
         return executionService.getExternalStorageLocation(path, operation, type);
-    }
-
-    /**
-     * Removes a list of workflows from the system.
-     *
-     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
-     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
-     * @return instance of {@link BulkResponse}
-     */
-    public BulkResponse deleteWorkflows(List<String> workflowIds, boolean archiveWorkflow) {
-        BulkResponse bulkResponse = new BulkResponse();
-        for (String workflowId : workflowIds) {
-            try {
-                deleteWorkflow(
-                        workflowId,
-                        archiveWorkflow); // TODO: change this to method that cancels then deletes
-                bulkResponse.appendSuccessResponse(workflowId);
-            } catch (Exception e) {
-                LOGGER.error(
-                        "bulk delete exception, workflowId {}, message: {} ",
-                        workflowId,
-                        e.getMessage(),
-                        e);
-                bulkResponse.appendFailedResponse(workflowId, e.getMessage());
-            }
-        }
-        return bulkResponse;
     }
 }

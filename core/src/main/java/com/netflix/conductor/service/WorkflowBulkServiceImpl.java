@@ -30,9 +30,12 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkflowBulkService.class);
     private final WorkflowExecutor workflowExecutor;
+    private final WorkflowService workflowService;
 
-    public WorkflowBulkServiceImpl(WorkflowExecutor workflowExecutor) {
+    public WorkflowBulkServiceImpl(
+            WorkflowExecutor workflowExecutor, WorkflowService workflowService) {
         this.workflowExecutor = workflowExecutor;
+        this.workflowService = workflowService;
     }
 
     /**
@@ -156,6 +159,32 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
             } catch (Exception e) {
                 LOGGER.error(
                         "bulk terminate exception, workflowId {}, message: {} ",
+                        workflowId,
+                        e.getMessage(),
+                        e);
+                bulkResponse.appendFailedResponse(workflowId, e.getMessage());
+            }
+        }
+        return bulkResponse;
+    }
+
+    /**
+     * Removes a list of workflows from the system.
+     *
+     * @param workflowIds List of WorkflowIDs of the workflows you want to remove from system.
+     * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
+     */
+    public BulkResponse deleteWorkflow(List<String> workflowIds, boolean archiveWorkflow) {
+        BulkResponse bulkResponse = new BulkResponse();
+        for (String workflowId : workflowIds) {
+            try {
+                workflowService.deleteWorkflow(
+                        workflowId,
+                        archiveWorkflow); // TODO: change this to method that cancels then deletes
+                bulkResponse.appendSuccessResponse(workflowId);
+            } catch (Exception e) {
+                LOGGER.error(
+                        "bulk delete exception, workflowId {}, message: {} ",
                         workflowId,
                         e.getMessage(),
                         e);
