@@ -217,7 +217,6 @@ public class WorkflowResource {
         workflowService.terminateWorkflow(workflowId, reason);
         workflowService.deleteWorkflow(workflowId, archiveWorkflow);
     }
-    )
 
     @Operation(
             summary = "Search for workflows based on payload and other parameters",
