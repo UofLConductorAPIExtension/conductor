@@ -207,7 +207,7 @@ public class WorkflowResource {
         workflowService.terminateWorkflow(workflowId, reason);
     }
 
-    @DeleteMapping("/{workflowId}/terminateRemove")
+    @DeleteMapping("/{workflowId}/terminate-Remove")
     @Operation(summary = "Terminate workflow execution and remove the workflow from the system")
     public void terminateRemove(
             @PathVariable("workflowId") String workflowId,
