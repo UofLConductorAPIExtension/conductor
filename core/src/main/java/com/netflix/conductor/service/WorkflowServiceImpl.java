@@ -204,7 +204,7 @@ public class WorkflowServiceImpl implements WorkflowService {
      * @param reason Reason for terminating the workflow. 
      * @param archiveWorkflow Archives the workflow and associated tasks instead of removing them.
      */
-    public void terminateRemoveWorkflow(String workflowId, String reason, boolean archiveWorkflow) {
+    public void terminateRemove(String workflowId, String reason, boolean archiveWorkflow) {
         workflowExecutor.terminateWorkflow(workflowId, reason);
         executionService.removeWorkflow(workflowId, archiveWorkflow);
     }
