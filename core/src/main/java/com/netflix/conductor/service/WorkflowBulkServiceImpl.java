@@ -203,7 +203,8 @@ public class WorkflowBulkServiceImpl implements WorkflowBulkService {
      * @return bulk response object containing a list of succeeded workflows and a list of failed
      *     ones with errors
      */
-    public BulkResponse terminateRemove(List<String> workflowIds, String reason, boolean archiveWorkflow) {
+    public BulkResponse terminateRemove(
+            List<String> workflowIds, String reason, boolean archiveWorkflow) {
         BulkResponse bulkResponse = new BulkResponse();
         for (String workflowId : workflowIds) {
             try {
