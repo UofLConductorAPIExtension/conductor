@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.netflix.conductor.core.execution.WorkflowExecutor;
+import com.netflix.conductor.service.WorkflowService;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -47,6 +48,11 @@ public class WorkflowBulkServiceTest {
         @Bean
         WorkflowExecutor workflowExecutor() {
             return mock(WorkflowExecutor.class);
+        }
+
+        @Bean
+        WorkflowService workflowService() {
+            return mock(WorkflowService.class);
         }
 
         @Bean
@@ -138,6 +144,30 @@ public class WorkflowBulkServiceTest {
     public void testTerminateNull() {
         try {
             workflowBulkService.terminate(null, null);
+        } catch (ConstraintViolationException ex) {
+            assertEquals(1, ex.getConstraintViolations().size());
+            Set<String> messages = getConstraintViolationMessages(ex.getConstraintViolations());
+            assertTrue(messages.contains("WorkflowIds list cannot be null."));
+            throw ex;
+        }
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testDeleteWorkflowNull() {
+        try {
+            workflowBulkService.deleteWorkflow(null, false);
+        } catch (ConstraintViolationException ex) {
+            assertEquals(1, ex.getConstraintViolations().size());
+            Set<String> messages = getConstraintViolationMessages(ex.getConstraintViolations());
+            assertTrue(messages.contains("WorkflowIds list cannot be null."));
+            throw ex;
+        }
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void testTerminateRemoveNull() {
+        try {
+            workflowBulkService.terminateRemove(null, null, false);
         } catch (ConstraintViolationException ex) {
             assertEquals(1, ex.getConstraintViolations().size());
             Set<String> messages = getConstraintViolationMessages(ex.getConstraintViolations());
