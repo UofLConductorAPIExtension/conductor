@@ -213,7 +213,8 @@ public class WorkflowResourceTest {
     @Test
     public void testTerminateRemove() {
         workflowResource.terminateRemove("w123", "test", false);
-        verify(mockWorkflowService, times(1)).terminateRemove(anyString(), anyString(), anyBoolean());
+        verify(mockWorkflowService, times(1))
+                .terminateRemove(anyString(), anyString(), anyBoolean());
     }
 
     @Test

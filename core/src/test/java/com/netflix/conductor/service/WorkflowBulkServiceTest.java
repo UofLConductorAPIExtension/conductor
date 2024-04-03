@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.netflix.conductor.core.execution.WorkflowExecutor;
-import com.netflix.conductor.service.WorkflowService;
 
 import jakarta.validation.ConstraintViolationException;
 
